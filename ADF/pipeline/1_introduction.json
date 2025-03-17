@@ -1,0 +1,56 @@
+{
+	"name": "1_introduction",
+	"properties": {
+		"activities": [
+			{
+				"name": "getpersonName",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prsn_name",
+					"value": "Ravi"
+				}
+			},
+			{
+				"name": "message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getpersonName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('Person name is',variables('prsn_name'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"prsn_name": {
+				"type": "String"
+			},
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-07T15:55:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

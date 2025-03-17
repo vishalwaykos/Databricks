@@ -1,0 +1,51 @@
+{
+	"name": "12_Assignement_cpytoDbable",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sink_DF",
+						"type": "DatasetReference"
+					},
+					"name": "deptdetailsSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Ds_filetoDb",
+						"type": "DatasetReference"
+					},
+					"name": "depttbl"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          deptid as short,",
+				"          deptname as string,",
+				"          location as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> deptdetailsSource",
+				"deptdetailsSource sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          deptid as string,",
+				"          deptname as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> depttbl"
+			]
+		}
+	}
+}

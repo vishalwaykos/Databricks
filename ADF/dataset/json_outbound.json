@@ -1,0 +1,30 @@
+{
+	"name": "json_outbound",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "vishoutbound/day9",
+				"fileSystem": "devcontainer"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"productid": {
+					"type": "string"
+				},
+				"productname": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

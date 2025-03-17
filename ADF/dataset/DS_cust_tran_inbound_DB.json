@@ -1,0 +1,37 @@
+{
+	"name": "DS_cust_tran_inbound_DB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_vishsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cust_id",
+				"type": "varchar"
+			},
+			{
+				"name": "cust_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tran_amt",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "tran_dt",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "cust_tran"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,211 @@
+{
+	"name": "32_cust_trans_",
+	"properties": {
+		"activities": [
+			{
+				"name": "getStartTime",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "starttime",
+					"value": {
+						"value": "@pipeline().parameters.w_start_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "getEndTime",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getStartTime",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "endtime",
+					"value": {
+						"value": "@pipeline().parameters.w_end_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "starthour",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getEndTime",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "starthour",
+					"value": {
+						"value": "@formatDateTime(variables('starttime'),'HH')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "endhour",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "starthour",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "endhour",
+					"value": {
+						"value": "@formatDateTime(variables('endtime'),'HH')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "getQuery",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "endhour",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "query",
+					"value": {
+						"value": "@concat('select * from cust_tran where tran_dt >','''',variables('starttime'),'''','and tran_dt <','''',variables('endtime'),'''')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "getQuery",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@variables('query')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_cust_tran_inbound_DB",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_cust_tran_outboun",
+						"type": "DatasetReference",
+						"parameters": {
+							"foldername": {
+								"value": "@concat('cust_',variables('starthour'),'_',variables('endhour'))",
+								"type": "Expression"
+							},
+							"filename": {
+								"value": "@concat('cust_',variables('starthour'),'_',variables('endhour'),'.json')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"w_start_time": {
+				"type": "string"
+			},
+			"w_end_time": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"starttime": {
+				"type": "String"
+			},
+			"endtime": {
+				"type": "String"
+			},
+			"starthour": {
+				"type": "String"
+			},
+			"endhour": {
+				"type": "String"
+			},
+			"query": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-13T16:03:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

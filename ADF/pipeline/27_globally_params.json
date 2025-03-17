@@ -1,0 +1,32 @@
+{
+	"name": "27_globally_params",
+	"properties": {
+		"activities": [
+			{
+				"name": "getCountryNameGlobally",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "cntry",
+					"value": {
+						"value": "@pipeline().globalParameters.COUNTRY",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"cntry": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-12T14:28:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

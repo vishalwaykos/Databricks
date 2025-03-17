@@ -1,0 +1,76 @@
+{
+	"name": "28_execute_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "getpname",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "p_name",
+					"value": "Raj"
+				}
+			},
+			{
+				"name": "getpLocation",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getpname",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "p_location",
+					"value": "Delhi"
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "getpLocation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "27_globally_params",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"variables": {
+			"p_name": {
+				"type": "String"
+			},
+			"p_location": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-12T14:28:46Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

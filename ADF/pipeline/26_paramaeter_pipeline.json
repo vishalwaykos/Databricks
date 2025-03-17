@@ -1,0 +1,37 @@
+{
+	"name": "26_paramaeter_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "getValues",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": {
+						"value": "@concat('person name is : ',pipeline().parameters.prsn_name1,' country is :',pipeline().globalParameters.COUNTRY)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"prsn_name1": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-12T14:25:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,26 @@
+{
+	"name": "DS_SQLDB_dept",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_vishsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "dept_id",
+				"type": "varchar"
+			},
+			{
+				"name": "dept_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dept"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

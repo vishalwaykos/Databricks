@@ -1,0 +1,40 @@
+{
+	"name": "DS_for_JSON",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "emp_details_7.json",
+				"folderPath": "vishinbound",
+				"fileSystem": "devcontainer"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "integer"
+				},
+				"name": {
+					"type": "string"
+				},
+				"gender": {
+					"type": "string"
+				},
+				"language": {
+					"type": "string"
+				},
+				"location": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

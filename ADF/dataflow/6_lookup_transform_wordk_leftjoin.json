@@ -1,0 +1,77 @@
+{
+	"name": "6_lookup_transform_wordk_leftjoin",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS1_DF_inbound",
+						"type": "DatasetReference"
+					},
+					"name": "empflow"
+				},
+				{
+					"dataset": {
+						"referenceName": "Ds_df_deptdetails",
+						"type": "DatasetReference"
+					},
+					"name": "deptdetals"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Sink_DF",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          age as string,",
+				"          salary as string,",
+				"          gender as string,",
+				"          deptno as integer,",
+				"          state as string,",
+				"          mobilenumber as string,",
+				"          mail as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> empflow",
+				"source(output(",
+				"          deptno as integer,",
+				"          deptname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> deptdetals",
+				"empflow, deptdetals lookup(empflow@deptno == deptdetals@deptno,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          order_id as string,",
+				"          { customer_id} as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

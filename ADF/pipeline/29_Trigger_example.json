@@ -1,0 +1,29 @@
+{
+	"name": "29_Trigger_example",
+	"properties": {
+		"activities": [
+			{
+				"name": "getMsg",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "msg",
+					"value": "This is Vishal"
+				}
+			}
+		],
+		"variables": {
+			"msg": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-03-13T12:59:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "deevadf",
+	"properties": {
+		"globalParameters": {
+			"COUNTRY": {
+				"type": "string",
+				"value": "INDIA"
+			}
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5173cb1d-c6bd-4143-839b-9aaee8dc8269",
+		"tenantId": "fd9eb785-e48e-4b97-a22f-1f9bfb567b30"
+	}
+}

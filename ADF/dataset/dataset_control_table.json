@@ -1,0 +1,26 @@
+{
+	"name": "dataset_control_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_vishsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "file_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tablename",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "control_tbl"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
